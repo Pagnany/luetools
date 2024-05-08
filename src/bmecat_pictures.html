@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="styles.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BMEcat Pictures</title>
+    <script type="module" src="bmecat_pictures.ts" defer></script>
+  </head>
+  <body>
+    <button onclick="history.back()">Zurück</button>
+    <div class="container">
+      <h1>BMEcat Pictures</h1>
+      <button type="button" id="buttonInputFile" name="buttonInputFile">BMEcat Datei auswählen</button>
+      <input type="text" id="inputFile" name="inputFile">
+      <br>
+      <div>
+        <label for="checkPicturesOneLine">Alle Bilder für einen Artikel in eine Zeile</label>
+        <input type="radio" id="checkPictureOneLine" name="picturePreset" checked="checked">
+        <br>
+        <label for="checkPicturesOnePerLine">Pro Bild eine Zeile</label>
+        <input type="radio" id="checkPictureOnePerLine" name="picturePreset">
+      </div>
+      <br>
+      <button type="button" id="buttonOutputFile" name="buttonOutputFile">Ziel für Output</button>
+      <input type="text" id="outputFile" name="outputFile" value="">
+      <br>
+      <br>
+      <button type="button" id="buttonStart" name="buttonStart">Starten</button>
+      <br>
+      <div id="output"></div>
+    </div>
+  </body>
+</html>
