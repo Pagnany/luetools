@@ -17,6 +17,8 @@ fn read_urls(path: &str) -> io::Result<Vec<String>> {
 }
 
 pub fn download_files_from_csv(input: &str, output: &str) -> String {
+    let mut faults = String::new();
+    let mut fault_count = 0;
     if let Ok(urls) = read_urls(input) {
         for url in urls {
             if let Some(file_name) = url.split('/').last() {
@@ -25,10 +27,16 @@ pub fn download_files_from_csv(input: &str, output: &str) -> String {
                     // alles läuft
                 } else {
                     // Fehler beim Herunterladen oder speichern
+                    fault_count += 1;
+                    faults = format!("{}<br>{}: {}", faults, fault_count, url);
                 }
             }
         }
-        return "Fertig".to_string();
+        if faults.is_empty() {
+            return "Fertig".to_string();
+        } else {
+            return format!("Fertig<br>Fehler bei folgenden Links:<br>{}", faults);
+        }
     } else {
         return "Fehler beim lesen der CSV".to_string();
     }
@@ -43,7 +51,7 @@ fn download_file(url: &str, path: &str) -> Result<(), Box<dyn std::error::Error>
         .build()?;
     let response = client.get(url).send()?;
     if response.status() != 200 {
-        return Ok(());
+        return Err(Box::from("HTML Fehler Code"));
     }
     let bytes = response.bytes()?;
     let mut file = File::create(path)?;
