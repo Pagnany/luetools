@@ -11,7 +11,7 @@ pub fn read_bmecat(file: String) -> TNewCatalog {
                         "FEATURE_SYSTEM" => {}
                         "CLASSIFICATION_SYSTEM" => {}
                         "CATALOG_GROUP_SYSTEM" => {}
-                        "ARTICLE" => {
+                        "ARTICLE" | "PRODUCT" => {
                             tnewcatalog.article.push(create_article(descen));
                         }
                         "ARTICLE_TO_CATALOGGROUP_MAP" => {}
@@ -31,7 +31,7 @@ fn create_article(node: roxmltree::Node) -> Article {
     };
     for descen in node.descendants() {
         match descen.tag_name().name() {
-            "SUPPLIER_AID" => {
+            "SUPPLIER_AID" | "SUPPLIER_PID" => {
                 article.id = descen.text().unwrap_or("").to_string();
             }
             "DESCRIPTION_SHORT" => {
